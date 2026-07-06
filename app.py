@@ -156,20 +156,26 @@ else:
 # ---------- INSIGHTS SUMMARY ----------
 st.subheader("📝 RevOps Insights Summary")
 st.markdown("""
-*(Draft — edit this block with your own read of the numbers before submitting)*
+Загальний win rate по 647 закритих угодах становить **33.4%**. Найкраще
+конвертує **US** (54.5% на 11 угодах) та **Georgia** (44.4% на 9 угодах),
+але це малі вибірки — головний ринок за обсягом, **Ukraine** (411 угод),
+тримає стабільні **37.9%**. Найгірше конвертує **Kazakhstan** — лише 20.2%
+на 94 угодах, що варто розслідувати: або невідповідність ICP, або
+проблема на етапі кваліфікації лідів у цьому регіоні.
 
-- Overall win rate across all closed deals is roughly **XX%**, driven mainly by
-  [strongest country/source] which converts noticeably above average.
-- [Weakest country/CRM] shows the lowest win rate, suggesting either a poor
-  ICP fit or a process bottleneck worth investigating with the sales team.
-- Deals sourced from **[top source]** make up the largest volume, but their
-  win rate is [higher/lower] than average — worth checking if that channel
-  needs better lead qualification upstream.
-- Higher PPC budget tiers [do/do not] correlate with better win rates, which
-  [supports/questions] the assumption that bigger ad spend brings
-  higher-intent leads.
-- The data quality table above surfaced **{n_issues} issues**, mostly
-  [closed deals missing a Closing Date / missing loss reasons] — fixing this
-  at the CRM validation-rule level would improve reporting accuracy going
-  forward.
+**Partner** — найбільше джерело за обсягом (274 ліди) і водночас показує
+win rate вище середнього (44.7%), тобто канал працює добре і за кількістю,
+і за якістю — варто розглянути збільшення інвестицій саме сюди.
+
+Залежність win rate від PPC budget нелінійна: базовий сегмент **0-500 USD**
+(488 угод, основний обсяг) конвертує лише на 31.1%, тоді як сегмент
+**2000-5000 USD** показує 62.5% — але на вибірці лише 16 угод, тому
+висновок про причинність тут передчасний і потребує більшої вибірки.
+
+Data quality перевірка знайшла 16 проблем: 11 угод мають заповнену Closing
+Date, хоча стадія ще не Closed (найімовірніше SDR забувають оновлювати
+Stage після фактичного закриття угоди), 4 угоди мають Closing Date раніше
+за AQL date (помилка ручного введення), і 1 угода Closed Lost без Loss
+reason. Рекомендація: додати обов'язкове поле Loss reason при виборі
+Closed Lost та валідацію Closing Date >= AQL date на рівні CRM.
 """.format(n_issues=len(issues_df) if issues else 0))
